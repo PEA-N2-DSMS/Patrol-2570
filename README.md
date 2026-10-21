@@ -10,8 +10,8 @@ python3 -m http.server 8000 --bind 0.0.0.0
 ```
 เปิด index.html ผ่าน static web server หรือเปิดไฟล์โดยตรงได้ สามารถนำทั้งโฟลเดอร์ไปให้บริการด้วย static hosting ได้ โดยยังไม่มีระบบบัญชีผู้ใช้หรือฐานข้อมูลกลาง
 
-- Leaflet 1.9.4 เก็บใน vendor (BSD-2-Clause, copyright อยู่ใน leaflet.js); แผนที่พื้นหลังใช้ OpenStreetMap ตาม attribution บนแผนที่
-- แผนที่พื้นหลังต้องเข้าถึง tile.openstreetmap.org และการคำนวณถนนต้องเข้าถึง router.project-osrm.org ผ่าน HTTPS บริการสาธารณะไม่รับประกันความพร้อมใช้งาน การกดคำนวณจะส่งพิกัดที่เลือกไป OSRM; ใช้บริการภายใน/เชิงพาณิชย์สำหรับงานจริงตามนโยบายหน่วยงาน
+- Leaflet 1.9.4 เก็บใน vendor (BSD-2-Clause, copyright อยู่ใน leaflet.js); แผนที่พื้นหลังใช้ Esri World Imagery ตาม attribution บนแผนที่
+- แผนที่พื้นหลังต้องเข้าถึง server.arcgisonline.com และการคำนวณถนนต้องเข้าถึง router.project-osrm.org ผ่าน HTTPS บริการสาธารณะไม่รับประกันความพร้อมใช้งาน การกดคำนวณจะส่งพิกัดที่เลือกไป OSRM; ใช้บริการภายใน/เชิงพาณิชย์สำหรับงานจริงตามนโยบายหน่วยงาน
 - เลือก Feeder ตามรหัสสายป้อนที่ 1; สายป้อนที่ 2 แสดงใน popup ไม่ถูกนำไปนับซ้ำ
 - ยอดรวมแยกตามทะเบียน Feeder ไม่ใช้การเรียงจุดใกล้กันเพื่อสมมติวงจรไฟฟ้า
 - ระยะเส้นทางรถยนต์อาจอ้อม ไม่ใช่แนวสาย และไม่ใช้เป็นหลักฐานสอบทวนระบบป้องกันโดยลำพัง; เส้นตรงแสดงแยกชัดเจนเมื่อ routing ล้มเหลว
@@ -40,3 +40,6 @@ python3 scripts/import_excel.py /path/to/switch.xlsx /path/to/recloser.xlsx
 
 ## GitHub Pages
 Push to `main` triggers `.github/workflows/pages.yml`. In repository Settings → Pages, choose **GitHub Actions** as the source. The workflow publishes only index.html, style.css, app.js, data.js, and vendor; uploaded source Excel files are not included. The published dashboard includes equipment coordinates from the supplied exports. Field notes stay in the user's browser.
+
+## GIS dashboard layout
+Single viewport with purple/yellow styling, satellite basemap, and a tabbed side panel. Only panel contents scroll. CB markers are larger; selecting one clears category/search filters and reveals devices sharing its primary Feeder. Bold purple straight spokes indicate shared Feeder membership only, not inferred electrical topology, downstream order, or actual conductor geometry. Hide them with the toolbar checkbox. Road routes remain separate yellow paths. On mobile the data panel can be toggled to expose the map.
