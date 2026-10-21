@@ -29,6 +29,10 @@ with sync_playwright() as p:
     page.goto(f'http://127.0.0.1:{server.server_port}/')
     page.wait_for_function("document.querySelector('#deviceCount').textContent==='9'")
     assert page.locator('[role=tab]').count()==0
+    assert page.evaluate('map.setZoom(25); map.getZoom()')==18
+    assert page.evaluate('map.getMaxZoom()')==18
+    assert page.evaluate("Object.values(map._layers).find(layer=>layer instanceof L.TileLayer).options.maxNativeZoom")==17
+    page.click('#fit')
     assert page.locator('#roadLength').inner_text()!='—'
     assert page.locator('#conductors').inner_text().count('SAC')==1
     assert 'ทั้ง Feeder SZA01' in page.locator('#wireScope').inner_text()

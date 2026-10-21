@@ -9,7 +9,7 @@ cd /workspace/Patrol-2570
 python3 -m http.server 8000 --bind 0.0.0.0
 ```
 
-No build or package installation is needed for the static website. Leaflet 1.9.4 is vendored (BSD-2-Clause, vendor/LICENSE). Satellite tiles use Esri World Imagery and retain provider attribution.
+No build or package installation is needed for the static website. Leaflet 1.9.4 is vendored (BSD-2-Clause, vendor/LICENSE). Satellite tiles use Esri World Imagery and retain provider attribution. Map zoom is capped at 18; native tile requests are capped at 17 and enlarged at the last zoom level to avoid requesting unavailable high-resolution imagery. Availability can still vary by coverage area.
 
 ## Meaning of the results
 - Latest SZA01 snapshot: CB 1, SF6 2, Fuse 6, Disconnecting 1. The merged archive has 386 unique device TAGs. Shared TAGs use the latest export; extra devices in the earlier snapshot remain in the merged mode.

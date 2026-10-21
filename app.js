@@ -14,8 +14,8 @@ function rootDevice() { return feederData().find(d => d.category === 'CB'); }
 function point(d) { return [d.lng, d.lat]; }
 function selectedDevice() { return feederData().find(d => d.id === selectedId); }
 try {
-  map = L.map('map', { zoomAnimation: false, fadeAnimation: false, markerZoomAnimation: false }).setView([15.986, 99.81], 14);
-  const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Tiles © Esri — Esri, Maxar, Earthstar Geographics, GIS User Community' }).addTo(map);
+  map = L.map('map', { maxZoom: 18, zoomAnimation: false, fadeAnimation: false, markerZoomAnimation: false }).setView([15.986, 99.81], 14);
+  const tiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 18, maxNativeZoom: 17, attribution: 'Tiles © Esri — Esri, Maxar, Earthstar Geographics, GIS User Community' }).addTo(map);
   tiles.on('tileerror', () => { $('maperror').hidden = false; $('maperror').textContent = 'ภาพดาวเทียมโหลดไม่ได้ · ตรวจการเชื่อมต่ออินเทอร์เน็ต'; });
   tiles.on('tileload', () => { $('maperror').hidden = true; });
   map.createPane('connections'); map.getPane('connections').style.zIndex = 410;
