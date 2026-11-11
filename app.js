@@ -115,7 +115,7 @@ function showOverview(withAreas){
 $('overview').onclick=()=>showOverview(true);
 $('circuits').onclick=()=>showOverview(false);
 $('dataset').innerHTML=window.PATROL_DATASETS.map(d=>'<option value="'+d.id+'">'+esc(d.label)+'</option>').join('');
-$('dataset').value='TT69000423';
+$('dataset').value='TT69000512';
 $('dataset').onchange=()=>{activeDataset=window.PATROL_DATASETS.find(d=>d.id===$('dataset').value);refreshDataset();
 showOverview(true);};
 $('selectedDevice').onchange=()=>select($('selectedDevice').value);
@@ -125,5 +125,15 @@ map.on('mousemove',e=>{$('coordinates').textContent=`WGS 84 · ${e.latlng.lat.to
 
 
 activeDataset=window.PATROL_DATASETS.find(d=>d.id===$('dataset').value);refreshDataset();
-showOverview(true);
 
+
+
+const equipmentLayer=L.layerGroup();
+const equipmentNames={DS_Recloser:'Recloser',DS_Switch:'สวิตช์',DS_Transformer:'หม้อแปลง'};
+for(const item of window.PATROL_EQUIPMENT || []){
+ const d=item.details;
+ L.circleMarker([item.lat,item.lng],{radius:6,color:item.type==='DS_Transformer'?'#ff88c8':'#39e6cd',fillOpacity:.85})
+ .bindTooltip(esc(equipmentNames[item.type])+' · '+esc(d['รหัสอุปกรณ์']||d['รหัส TAG']))
+ .bindPopup('<strong>'+esc(equipmentNames[item.type])+'</strong><dl>'+Object.entries(d).map(([k,v])=>'<dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd>').join('')+'</dl><small>พิกัดจาก Excel · ยังไม่มีรหัสเชื่อมกับเสา</small>').addTo(equipmentLayer);
+}
+L.control.layers(null,{'อุปกรณ์จาก Excel (ทั้งชุดข้อมูล)':equipmentLayer},{collapsed:false}).addTo(map);
